@@ -1,0 +1,6 @@
+Step	Feature	Status
+1	Auth (register + login + protect + roles)	✔ DONE
+2	Doctor Availability	🔜 NEXT
+3	Appointments	⏳ After availability
+4	Medical Reports	Later
+5	AI Features	Final
