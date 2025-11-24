@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import mongoose from "mongoose";
 import { authRoute } from "./Routes/authRoutes.js";
+import availabilityRoute from "./Routes/availabilityRoutes.js";
 dotenv.config()
 
 const app = express()
@@ -13,6 +14,7 @@ const PORT = process.env.PORT
 const MONGO_URI = process.env.MONGO_URI
 
 app.use('/api',authRoute)
+app.use('/api',availabilityRoute)
 
 
 app.listen(PORT,() => console.log(`Server is running on http://localhost:${PORT}`)).on('error',(err)=>{'Server Error : ',err})
