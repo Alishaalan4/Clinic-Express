@@ -4,6 +4,8 @@ import cors from 'cors'
 import mongoose from "mongoose";
 import { authRoute } from "./Routes/authRoutes.js";
 import availabilityRoute from "./Routes/availabilityRoutes.js";
+import  {appointmentRoute}  from "./Routes/appointmentRoute.js";
+
 dotenv.config()
 
 const app = express()
@@ -15,7 +17,7 @@ const MONGO_URI = process.env.MONGO_URI
 
 app.use('/api',authRoute)
 app.use('/api',availabilityRoute)
-
+app.use('/api',appointmentRoute)
 
 app.listen(PORT,() => console.log(`Server is running on http://localhost:${PORT}`)).on('error',(err)=>{'Server Error : ',err})
 mongoose.connect(MONGO_URI).then(()=>
