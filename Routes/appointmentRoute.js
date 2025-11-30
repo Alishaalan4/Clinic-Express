@@ -9,6 +9,7 @@ import {
     cancelAppointment,
     confirmAppointment
 } from "../Controllers/appointmentController.js";
+import { sendEmail } from "../Utils/emailService.js";
 
 import { protect, roleOnly } from "../Middlewares/authMiddleware.js";
 
@@ -39,3 +40,82 @@ appointmentRoute.delete("/:id/cancel", protect, cancelAppointment);
 appointmentRoute.put("/doctor/:id/confirm", protect, roleOnly("doctor"), confirmAppointment);
 
 
+
+appointmentRoute.get("/test-email", async (req, res) => {
+    try 
+    {
+        await sendEmail({
+        to: "shaalanali20@gmail.com",
+        subject: "Test Email Working",
+        text: "This is a test email",
+        });
+        res.json({ message: "Email sent!" });
+    } 
+    catch (e) 
+    {
+        console.log("EMAIL ERROR:", e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+    // user book
+    POST
+        Headers:
+            Authorization: Bearer <user_token>
+        Body JSON:
+        {
+            "doctorId": "64abc...def",
+            "date": "2025-12-01",
+            "time": "09:00",
+            "reason": "Chest pain"
+        }
+
+    
+
+
+    // doctor confirm appointment 
+    PUT http://localhost:8000/api/doctor/<appointmentId>/confirm
+    Headers:
+        Authorization: Bearer <doctor_token>
+    No body required
+
+    
+    
+    // admin create appointment   
+    POST http://localhost:8000/api/admin/create
+    Headers:
+        Authorization: Bearer <admin_token>
+    Body JSON:
+    {
+        "userId": "64abc...usr",
+        "doctorId": "64abc...doc",
+        "date": "2025-12-01",
+        "time": "10:00",
+        "reason": "Follow-up"
+    }
+
+
+
+
+    // cancel appointment, admin or doctor
+    DELETE http://localhost:5000/api/appointments/<appointmentId>/cancel
+    Headers:
+        Authorization: Bearer <token>
+
+
+
+
+
+*/

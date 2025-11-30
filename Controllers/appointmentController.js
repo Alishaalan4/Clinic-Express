@@ -146,7 +146,7 @@ export async function getUserAppointments(req,res)
             return res.status(403).json({ message: "Only users can access this endpoint."})
         }
         const appointments = await Appointment.find({userId}).populate("doctorId", "name email specialization")
-        return res.josn({appointments})
+        return res.json({appointments})
     }
     catch(err)
     {
@@ -166,12 +166,13 @@ export async function getDoctorAppointments(req,res)
             return res.status(403).json({ message: "Only doctors can access this endpoint." });
         }
 
-        const appointments =  await Appointment.find({doctorId}).populate("userId,name email phone")
+        const appointments =   await Appointment.find()
+        .populate("userId", "name email phone")
         return res.json({appointments})
     }
     catch(err)
     {
-        return res.status(500).josn({message:err.message})
+        return res.status(500).json({message:err.message})
     }
     
 }
@@ -183,12 +184,11 @@ export async function getAllAppointments(req,res)
 {
     try
     {
-        const userId = req.user.id
         if (req.user.role !== "admin")
         {
             return res.status(403).json({ message: "Only admin can access." });
         }
-        const appointments = await Appointment.find({userId}).populate|("userId","name email").populate("doctorId","name email")
+        const appointments = await Appointment.find().populate("userId" ,"name email").populate("doctorId" ,"name email")
         return res.json({appointments})
     }
     catch(err)
@@ -244,7 +244,7 @@ export async function adminCreateAppointment(req,res)
             time,
             reason : reason  || null,
             status : "confirmed",
-            createdBy : "admnin"
+            createdBy : "admin"
         })
         await removeSlotFromDoctor(doctor,date,time)
         try
@@ -258,7 +258,7 @@ export async function adminCreateAppointment(req,res)
         }
         catch(err)
         {
-            console.error("Email send failed:", e.message);
+            console.error("Email send failed:", err.message);
         }
 
         return res.status(201).json({ message: "Appointment created by admin.", appointment });

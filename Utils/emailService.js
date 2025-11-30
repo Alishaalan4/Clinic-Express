@@ -1,5 +1,7 @@
 import nodemailer from "nodemailer";
+import dotenv from 'dotenv'
 
+dotenv.config()
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST || "smtp.gmail.com",
     port: process.env.EMAIL_PORT ? Number(process.env.EMAIL_PORT) : 587,
@@ -9,6 +11,15 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASS, 
     },
 });
+
+transporter.verify((error, success) => {
+    if (error) {
+        console.log("SMTP ERROR:", error);
+    } else {
+        console.log("SMTP CONNECTED");
+    }
+});
+
 
 export async function sendEmail({ to, subject, text, html }) {
     const msg = {
