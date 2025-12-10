@@ -16,10 +16,10 @@ const reportSchema = new mongoose.Schema(
         default: null, // doctor who reviewed the report
     },
 
-    fileUrl: 
-    {
-        type: String,
-        required: true, // stored in cloud or your server
+    filePath: 
+    { 
+        type: String,          // BASE64 DATA
+        required: true,
     },
 
     fileType:   
@@ -43,7 +43,7 @@ const reportSchema = new mongoose.Schema(
 },
     { timestamps: true }
 )
-
+export const Report = mongoose.model("Report",reportSchema)
 
 /*
 Report Model
