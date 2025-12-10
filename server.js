@@ -2,10 +2,13 @@ import express from "express";
 import dotenv from 'dotenv'
 import cors from 'cors'
 import mongoose from "mongoose";
+
 import { authRoute } from "./Routes/authRoutes.js";
 import availabilityRoute from "./Routes/availabilityRoutes.js";
 import  {appointmentRoute}  from "./Routes/appointmentRoute.js";
 import { reportRoute } from "./Routes/reportRoute.js";
+import { adminRoute } from "./Routes/adminRoute.js";
+
 dotenv.config()
 
 const app = express()
@@ -19,6 +22,7 @@ app.use('/api',authRoute)
 app.use('/api',availabilityRoute)
 app.use('/api',appointmentRoute)
 app.use('/api',reportRoute)
+app.use('/api',adminRoute)
 
 app.listen(PORT,() => console.log(`Server is running on http://localhost:${PORT}`)).on('error',(err)=>{'Server Error : ',err})
 mongoose.connect(MONGO_URI).then(()=>
